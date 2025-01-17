@@ -1,43 +1,122 @@
 <%- include('partials/header') %>
 
 <section> <!--Navbar-->
-    <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-dark rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white); --bs-nav-pills-link-active-color: var(--bs-primary); --bs-nav-pills-link-active-bg: var(--bs-white);">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Appetizers</button>
-        </li>
+    <ul class="nav nav-fill gap-2 p-1 small bg-dark rounded-5 shadow-sm" id="pillNav2" role="tablist" style="--bs-nav-link-color: var(--bs-white);">
+        <form action="/dashboard" method="GET">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active rounded-5" id="home-tab2" data-bs-toggle="tab" type="submit" role="tab" aria-selected="true">Appetizers</button>
+          </li>
+        </form>
         <form action="/dashboard/maincourse" method="GET">
             <li class="nav-item" role="presentation">
-              <button class="nav-link rounded-5" id="profile-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Main Courses</button>
+              <button class="nav-link rounded-5" id="profile-tab2" data-bs-toggle="tab" type="submit" role="tab" aria-selected="false">Main Courses</button>
             </li>
         </form>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Desserts</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Beverages</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">Snacks</button>
-        </li>
+        <form action="/dashboard/dessert" method="GET">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="submit" role="tab" aria-selected="false">Desserts</button>
+          </li>
+        </form>
+        <form action="/dashboard/beverage" method="GET">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="submit" role="tab" aria-selected="false">Beverages</button>
+          </li>
+        </form>
+        <form action="/dashboard/snack" method="GET">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link rounded-5" id="contact-tab2" data-bs-toggle="tab" type="submit" role="tab" aria-selected="false">Snacks</button>
+          </li>
+        </form>
     </ul>
 </section>
-<section>
+<section style="display: flex; flex-wrap: wrap;"> <!--Items-->
     <% if (recipes && recipes.length > 0) { %>
         <% recipes.forEach(function(recipe) { %>
             <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="..."> <!-- You can replace "..." with the actual image URL -->
                 <div class="card-body">
                     <h5 class="card-title"><%= recipe.title %></h5>
                     <p class="card-text"><%= recipe.r_description %></p>
-                    <a href="#" class="btn btn-primary">View</a>
+                    <a href="#" class="btn btn-primary" onclick="showRecipeDetails('<%= recipe.title %>', '<%= recipe.difficulty %>', '<%= recipe.ingredients %>', '<%= recipe.instructions %>', '<%= recipe.r_description %>', '<%= recipe.r_time %>')">View</a>
                 </div>
             </div>
         <% }); %>
     <% } else { %>
         <h2 style="text-align: center;">No recipes found</h2>
     <% } %>
-    
-
+</section>
+<section> <!--Item View-->
+  <div class="recipe-container" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); z-index: 1000;">
+    <div class="recipe-header">
+      <h5>Name: <span id="name"></span></h5>
+      <h6>Time: <span id="time"></span></h6>
+      <h6>Difficulty: <span id="difficulty"></span></h6>
+      <button class="close-btn" onclick="document.querySelector('.recipe-container').style.display='none'; overlay.style.display='none';">×</button>
+    </div>
+    <div class="description-section">
+      <h6>Description: <span id="description"></span></h6>
+    </div>
+    <div class="content-section">
+      <div class="instructions">
+        <h6>Instructions: <span id="instructions"></span></h6>
+      </div>
+      <div class="ingredients">
+        <h6>Ingredients: <span id="ingredients"></span></h6>
+      </div>
+    </div>
+  </div>
+</section>
+<section><!--Form-->
+  <div class="form-container popup" id="recipeForm" style="display: none;">
+    <h3>Form: Create Recipe</h3>
+    <form action="/recipe" method="POST">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter recipe name">
+      </div>
+      <div class="form-group">
+        <label for="difficulty">Difficulty</label>
+        <select id="difficulty" name="difficulty">
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="ingredients">Ingredients</label>
+        <input type="text" id="ingredients" name="ingredients" placeholder="Enter ingredients" maxlength="1000">
+        <div id="ingredientsCount">1000 characters remaining</div>
+      </div>
+      <div class="form-group">
+        <label for="instructions">Instructions</label>
+        <input type="text" id="instructions" name="instructions" placeholder="Enter instructions" maxlength="2000">
+        <div id="instructionsCount">2000 characters remaining</div>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" id="description" name="description" placeholder="Enter description" maxlength="2000">
+        <div id="descriptionCount">2000 characters remaining</div>
+      </div>
+      <div class="form-group">
+        <label for="time">Time Required</label>
+        <input type="text" id="time" name="time" placeholder="20-30m">
+      </div>
+      <div class="form-group">
+        <label for="type">Type</label>
+        <select id="type" name="type">
+          <option value="Appetizer">Appetizer</option>
+          <option value="Main Course">Main Course</option>
+          <option value="Dessert">Dessert</option>
+          <option value="Beverage">Beverage</option>
+          <option value="Snack">Snack</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success">Save</button>
+        <button type="button" id="closeBtn" class="btn btn-danger">Close</button>
+      </div>
+    </form>
+  </div>
+  <button style="margin: 25px;" type="button" class="btn btn-success" id="formBtn">Add recipe</button>
 </section>
 
 <%- include('partials/footer') %>

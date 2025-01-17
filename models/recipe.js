@@ -25,22 +25,22 @@ const recipe = dbconn.define("recipe", {
     },
     r_description: {
         type: DataTypes.STRING(2000),
-        allowNull: true // Assuming this can be optional
+        allowNull: true 
     },
     r_time: {
         type: DataTypes.TEXT,
         allowNull: false
     },
     image: {
-        type: DataTypes.BLOB, // For storing binary data
-        allowNull: true // Assuming this can be optional
+        type: DataTypes.BLOB, 
+        allowNull: true 
     },
     r_type: {
         type: DataTypes.ENUM('Appetizer', 'Main Course', 'Dessert', 'Beverage', 'Snack'),
         allowNull: false
     }
 }, {
-    tableName: 'recipe', // Use 'recipe' as the table name
+    tableName: 'recipe', 
     createdAt: 'created_at',
     updatedAt: 'updated_at'
 });

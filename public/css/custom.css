@@ -1,58 +1,184 @@
 /* Custom styles */
-.navbar {
-    margin-bottom: 2rem;
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
 }
 
-.card {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Ensure it overlays other content */
+    display: none; /* Initially hidden */
 }
 
-.display-4 {
-    font-weight: 300;
+
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 15px; /* Reduced padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001; /* Above the overlay */
+    display: none; /* Initially hidden */
+    width: 90%; /* Full width on small screens */
+    max-width: 400px; /* Reduced maximum width for smaller screens */
+    max-height: 80vh; /* Maximum height to fit the screen */
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
-.table th {
-    font-weight: 500;
+.form-container {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #f9f9f9; /* Light background for the form */
 }
 
-footer {
+.form-group {
+    margin-bottom: 15px; /* Space between form groups */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px; /* Space between label and input */
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%; /* Full width for inputs */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding in width */
+}
+
+.form-group textarea {
+    resize: vertical; /* Allow vertical resizing */
+}
+
+.btn {
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.close-button {
+    background-color: #dc3545; /* Bootstrap danger color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.close-button:hover {
+    background-color: #c82333; /* Darker shade on hover */
+}
+
+.logo {
+    width: 100px;
+    border-radius: 15px;
+}
+
+.recipe-container {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1001; /* Above the overlay */
+}
+
+
+
+  .recipe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  .recipe-header div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .recipe-header input {
+    width: 150px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fdfdfd;
+  }
+
+  .recipe-header .close-btn {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #999;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
+
+  .recipe-header .close-btn:hover {
+    color: #333;
+  }
+
+  .description-section {
+    margin-bottom: 15px;
+  }
+
+  .description-section textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    background-color: #fdfdfd;
+  }
+
+  .content-section {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+  }
+
+  .content-section .instructions,
+  .content-section .ingredients {
+    flex: 1;
+  }
+
+  .content-section textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    background-color: #fdfdfd;
+  }
+
+  footer {
     margin-top: 3rem;
     padding: 1rem 0;
     text-align: center;
     background-color: #f8f9fa;
-}
-
-.notification-container {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-    min-width: 300px;
-}
-
-.notification {
-    background-color: #17a2b8;
-    color: white;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    animation: slideIn 0.5s ease-out;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-.logo{
-    width: 100px;
-    border-radius: 15px;
-
 }
